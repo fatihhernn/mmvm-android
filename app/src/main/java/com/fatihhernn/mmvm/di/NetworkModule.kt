@@ -19,7 +19,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-    private val apiEndpoint="https://rickandmortyapi.com/api/"
+    //private val rickApiEndpoint="https://rickandmortyapi.com/api/"
+
+    private val endPoint="https://dist-learn.herokuapp.com/api/"
 
     @Provides
     fun provideApiService(retrofit: Retrofit):NetworkApiService{
@@ -52,7 +54,7 @@ class NetworkModule {
 
     @Provides
     fun provideEndPoint():EndPoint{
-        return EndPoint(apiEndpoint)
+        return EndPoint(endPoint)
     }
 
 

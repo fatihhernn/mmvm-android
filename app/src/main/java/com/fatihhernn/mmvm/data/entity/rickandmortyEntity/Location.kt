@@ -1,4 +1,4 @@
-package com.example.rickandmorty.data.entity.listing
+package com.fatihhernn.mmvm.data.entity.rickandmortyEntity
 
 
 import com.google.gson.annotations.SerializedName

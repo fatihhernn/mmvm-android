@@ -1,8 +1,6 @@
-package com.example.rickandmorty.data.entity.core
+package com.fatihhernn.mmvm.data.entity.rickandmortyEntity
 
 
-import com.example.rickandmorty.data.entity.listing.Location
-import com.example.rickandmorty.data.entity.listing.Origin
 import com.google.gson.annotations.SerializedName
 
 data class Character(

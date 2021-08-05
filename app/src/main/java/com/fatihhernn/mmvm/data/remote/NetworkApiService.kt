@@ -1,18 +1,30 @@
 package com.fatihhernn.mmvm.data.remote
 
-import com.example.rickandmorty.data.entity.core.Character
-import com.example.rickandmorty.data.entity.listing.RickAndMortyBaseResponse
-import retrofit2.Call
+import android.util.Log
+import com.fatihhernn.mmvm.data.entity.login.LoginRequest
+import com.fatihhernn.mmvm.data.entity.login.LoginResponse
+import com.fatihhernn.mmvm.data.entity.register.RegisterRequest
+import com.fatihhernn.mmvm.data.entity.register.RegisterResponse
+import com.fatihhernn.mmvm.data.entity.rickandmortyEntity.Character
+import com.fatihhernn.mmvm.data.entity.rickandmortyEntity.RickAndMortyBaseResponse
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface NetworkApiService {
+
+    /*
     @GET("character")
     suspend fun listCharacter(@Query("page") page:Int): Response<RickAndMortyBaseResponse>
 
     @GET("character/{id}")
     suspend fun getCharacter(@Path("id") id:Int):Response<Character>
+
+     */
+
+    @POST("auth/register")
+    suspend fun register(@Body request: RegisterRequest):Response<RegisterResponse>
+
+    @POST("auth/login")
+    suspend fun login(@Body request: LoginRequest):Response<LoginResponse>
 }
 

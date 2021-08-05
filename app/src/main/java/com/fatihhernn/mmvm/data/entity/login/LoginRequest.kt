@@ -1,12 +1,10 @@
-package com.fatihhernn.mmvm.data.entity.register
+package com.fatihhernn.mmvm.data.entity.login
 
 import com.google.gson.annotations.SerializedName
 
-data class RegisterRequest(
+data class LoginRequest(
     @SerializedName("email")
     val email: String,
-    @SerializedName("name")
-    val name: String,
     @SerializedName("password")
     val password: String
 )
