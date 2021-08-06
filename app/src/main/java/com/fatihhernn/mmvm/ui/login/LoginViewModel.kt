@@ -11,8 +11,10 @@ import com.fatihhernn.mmvm.data.entity.login.LoginResponse
 import com.fatihhernn.mmvm.databinding.FragmentSplashBinding
 import com.fatihhernn.mmvm.ui.splash.SplashViewModel
 import com.fatihhernn.mmvm.util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class LoginViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     var apiRepository: ApiRepository
@@ -23,7 +25,7 @@ class LoginViewModel @Inject constructor(
 
     fun login(mail: String, password: String) :LiveData<Resource<LoginResponse>>{
         val request=LoginRequest(mail,password)
-        apiRepository.login(request)
+        return apiRepository.login(request)
     }
 
 
