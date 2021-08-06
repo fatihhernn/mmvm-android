@@ -12,7 +12,8 @@ abstract class BaseDataSource {
                 if (body!=null)
                     return Resource.success(body)
             }
-            return error("${response.code()} - ${response.message()}")
+            var errorBody=response.errorBody().toString()
+            return error("${response.code()} - $errorBody")
         }
         catch (e: Exception){
             return error("${e.localizedMessage} - ${e.message}")

@@ -12,15 +12,6 @@ import retrofit2.http.*
 
 interface NetworkApiService {
 
-    /*
-    @GET("character")
-    suspend fun listCharacter(@Query("page") page:Int): Response<RickAndMortyBaseResponse>
-
-    @GET("character/{id}")
-    suspend fun getCharacter(@Path("id") id:Int):Response<Character>
-
-     */
-
     @POST("auth/register")
     suspend fun register(@Body request: RegisterRequest):Response<RegisterResponse>
 

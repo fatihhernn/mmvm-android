@@ -6,9 +6,12 @@ import com.fatihhernn.mmvm.data.entity.register.RegisterRequest
 import com.fatihhernn.mmvm.util.BaseDataSource
 import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(private val apiService: NetworkApiService) :BaseDataSource() {
+class RemoteDataSource @Inject constructor(
+    private val apiService: NetworkApiService,
+    private val rickApi:RickApiService
+    ) :BaseDataSource() {
 
-   // suspend fun fetchListCharacters(page:Int=1) =getResult { apiService.listCharacter(1) }
+    suspend fun fetchListCharacters(page:Int=1) =getResult { rickApi.listCharacter(1) }
 
     suspend fun postRegister(request: RegisterRequest)=getResult { apiService.register(request) }
 

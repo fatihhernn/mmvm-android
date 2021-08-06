@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    apiRepository: ApiRepository
+    val apiRepository: ApiRepository
 ):ViewModel() {
 
     private val navigationLiveData=MutableLiveData<String>()
@@ -21,7 +21,12 @@ class SplashViewModel @Inject constructor(
 
     fun checkTokenAndNavigation() {
         Handler().postDelayed({
-            navigationLiveData.value="auth"
-        },3000)
+            if (apiRepository.checkToken().isNullOrEmpty()){
+                navigationLiveData.value="auth"
+            }
+            else
+                navigationLiveData.value="home"
+
+        },2000)
     }
 }

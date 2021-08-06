@@ -3,6 +3,7 @@ package com.fatihhernn.mmvm.di
 import androidx.viewbinding.BuildConfig
 import com.fatihhernn.mmvm.data.remote.NetworkApiService
 import com.fatihhernn.mmvm.data.remote.RemoteDataSource
+import com.fatihhernn.mmvm.data.remote.RickApiService
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -12,6 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Qualifier
 
 /**dager bazı instanceları dışarı açmak için diğer classları taşınması için oluşturulmuş kavram*/
 /**activite yaşadığı süre boyunca bu module yaşayacak*/
@@ -21,17 +23,31 @@ class NetworkModule {
 
     //private val rickApiEndpoint="https://rickandmortyapi.com/api/"
 
-    private val endPoint="https://dist-learn.herokuapp.com/api/"
+    //private val endPoint="https://dist-learn.herokuapp.com/api/"
 
     @Provides
-    fun provideApiService(retrofit: Retrofit):NetworkApiService{
+    fun provideApiService(@ApiRetrofit retrofit: Retrofit):NetworkApiService{
         return retrofit.create(NetworkApiService::class.java)
+    }
+    @Provides
+    fun provideRickService(@RickAndMortyRetrofit retrofit: Retrofit):RickApiService{
+        return retrofit.create(RickApiService::class.java)
     }
 
     @Provides //aşağıda verilen iki tane parametre objesini bulup pass edecek
-    fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson,endPoint: EndPoint):Retrofit{
+    @ApiRetrofit
+    fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson,@ApiEndPoint endPoint: String):Retrofit{
         return Retrofit.Builder()
-            .baseUrl(endPoint.url)
+            .baseUrl(endPoint)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
+            .build()
+    }
+    @Provides //aşağıda verilen iki tane parametre objesini bulup pass edecek
+    @RickAndMortyRetrofit
+    fun provideRickRetrofit(okHttpClient: OkHttpClient, gson: Gson,@RickAndMortyEndPoint endPoint: String):Retrofit{
+        return Retrofit.Builder()
+            .baseUrl(endPoint)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
@@ -53,16 +69,38 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideEndPoint():EndPoint{
-        return EndPoint(endPoint)
+    fun provideRemoteDataSource(apiService: NetworkApiService,rickApiService:RickApiService):RemoteDataSource{
+        return RemoteDataSource(apiService,rickApiService)
     }
 
-
     @Provides
-    fun provideRemoteDataSource(apiService: NetworkApiService):RemoteDataSource{
-        return RemoteDataSource(apiService)
+    @ApiEndPoint
+    fun provideApiString():String{
+        return "https://dist-learn.herokuapp.com/api/"
+    }
+    @Provides
+    @RickAndMortyEndPoint
+    fun provideRickString():String{
+        return "https://rickandmortyapi.com/api/"
     }
 
 }
 
 data class EndPoint(val url:String)
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class RickAndMortyEndPoint
+
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ApiEndPoint
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class RickAndMortyRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ApiRetrofit

@@ -12,8 +12,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var endPoint: EndPoint
+
 
     @Inject
     lateinit var service: NetworkApiService

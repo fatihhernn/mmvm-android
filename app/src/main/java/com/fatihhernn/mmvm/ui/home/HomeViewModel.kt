@@ -15,11 +15,11 @@ class HomeViewModel @Inject constructor(
     private val repository: ApiRepository
 ) : ViewModel() {
 
-    /*
+
     fun fetchRickMortyList():LiveData<Resource<RickAndMortyBaseResponse>>
                 = repository.getCharacterList()
 
-     */
+
 
     override fun onCleared() {
         super.onCleared()
